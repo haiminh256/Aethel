@@ -1,3 +1,4 @@
+pub mod camera;
 use crate::core::window::Window;
 
 pub struct Renderer;

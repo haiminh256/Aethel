@@ -12,6 +12,7 @@ impl Window {
         let mut glfw = glfw::init(glfw::fail_on_errors).unwrap();
         glfw.window_hint(glfw::WindowHint::ContextVersion(4, 6));
         glfw.window_hint(glfw::WindowHint::OpenGlProfile(glfw::OpenGlProfileHint::Core));
+        glfw.window_hint(glfw::WindowHint::Resizable(false));
         let (window, events) = glfw.create_window(width, height, title, glfw::WindowMode::Windowed).expect("Can't create window");
         Self { glfw: glfw, window: window, events: events}
     }
@@ -21,10 +22,10 @@ impl Window {
     pub fn should_close(&mut self) -> bool {
         self.window.should_close()
     }
-    pub fn get_window(&mut self) -> &PWindow {
-        &self.window
+    pub fn get_window(&mut self) -> &mut PWindow {
+        &mut self.window
     }
-    pub fn get_instance(&mut self) -> &Glfw {
+    pub fn get_instance(&self) -> &Glfw {
         &self.glfw
     }
     pub fn get_event(&mut self) -> &GlfwReceiver<(f64, WindowEvent)>{

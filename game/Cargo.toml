@@ -5,3 +5,4 @@ edition = "2024"
 
 [dependencies]
 aethel = { path = "../aethel" } 
+nalgebra-glm = "0.21.0"
