@@ -93,4 +93,10 @@ impl Shader {
             gl::DeleteProgram(self.id);
         }
     }
+    pub fn set_int(&self, name: &str, value: i32) {
+        let uniform_name = CString::new(name).unwrap();
+        unsafe {
+            gl::Uniform1i(gl::GetUniformLocation(self.id, uniform_name.as_ptr() as *const i8), value);
+        }
+    }
 }

@@ -1,4 +1,5 @@
 pub mod camera;
+pub mod texture;
 use crate::core::window::Window;
 
 pub struct Renderer;
@@ -13,5 +14,8 @@ impl Renderer {
                 None => std::ptr::null(),
             }
         }); 
+        unsafe {
+            gl::Enable(gl::DEPTH_TEST);
+        }
     }
 }
