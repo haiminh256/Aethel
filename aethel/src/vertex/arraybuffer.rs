@@ -17,9 +17,11 @@ impl ArrayBuffer {
             gl::BindVertexArray(self.id);
         }
     }
-    pub fn vertex_atrrib_pointer(&self, location: u32, components: i32, stride: i32, offset: u32){
+    pub fn vertex_atrrib_pointer(&self, location: u32, components: i32, stride: i32, offset_bytes: usize){
         unsafe {
-            let offset_ptr = (offset as usize * size_of::<f32>()) as *const c_void;
+            let f32_count = offset_bytes / size_of::<f32>();
+            
+            let offset_ptr = (f32_count * size_of::<f32>()) as *const c_void;
             gl::VertexAttribPointer(location, components, gl::FLOAT, gl::FALSE, stride, offset_ptr);
             gl::EnableVertexAttribArray(location);
         }

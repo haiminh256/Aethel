@@ -7,6 +7,7 @@ use aethel::vertex::arraybuffer::ArrayBuffer;
 use aethel::vertex::elementbuffer::ElementBuffer;
 use aethel::vertex::vertexbuffer::VertexBuffer;
 use aethel::renderer::camera::Camera;
+use aethel::vertex::Vertex;
 use nalgebra_glm as glm;
 
 fn main(){
@@ -16,39 +17,43 @@ fn main(){
     renderer.init(&mut window);
 
     let vertices = [
-	 0.5, -0.5,  0.5,  1.0, 1.0, 1.0, 1.0,  0.0, 0.0, // 0
-	-0.5, -0.5,  0.5,  1.0, 1.0, 1.0, 1.0,  1.0, 0.0, // 1
-	-0.5,  0.5,  0.5,  1.0, 1.0, 1.0, 1.0,  1.0, 1.0, // 2
-	 0.5,  0.5,  0.5,  1.0, 1.0, 1.0, 1.0,  0.0, 1.0, // 3
+        // Front (+Z)
+        Vertex::new(glm::vec3( 0.5, -0.5,  0.5), glm::vec3(1.0, 1.0, 1.0), glm::vec3(0.0, 0.0, 0.0), glm::vec2(0.0, 0.0)), // 0
+        Vertex::new(glm::vec3(-0.5, -0.5,  0.5), glm::vec3(1.0, 1.0, 1.0), glm::vec3(0.0, 0.0, 0.0), glm::vec2(1.0, 0.0)), // 1
+        Vertex::new(glm::vec3(-0.5,  0.5,  0.5), glm::vec3(1.0, 1.0, 1.0), glm::vec3(0.0, 0.0, 0.0), glm::vec2(1.0, 1.0)), // 2
+        Vertex::new(glm::vec3( 0.5,  0.5,  0.5), glm::vec3(1.0, 1.0, 1.0), glm::vec3(0.0, 0.0, 0.0), glm::vec2(0.0, 1.0)), // 3
 
-	 // Back (-Z)
-	  0.5, -0.5, -0.5,  1.0, 1.0, 1.0, 1.0,  0.0, 0.0, // 4
-	 -0.5, -0.5, -0.5,  1.0, 1.0, 1.0, 1.0,  1.0, 0.0, // 5
-	 -0.5,  0.5, -0.5,  1.0, 1.0, 1.0, 1.0,  1.0, 1.0, // 6
-	  0.5,  0.5, -0.5,  1.0, 1.0, 1.0, 1.0,  0.0, 1.0, // 7
+        // Back (-Z)
+        Vertex::new(glm::vec3( 0.5, -0.5, -0.5), glm::vec3(1.0, 1.0, 1.0), glm::vec3(0.0, 0.0, 0.0), glm::vec2(0.0, 0.0)), // 4
+        Vertex::new(glm::vec3(-0.5, -0.5, -0.5), glm::vec3(1.0, 1.0, 1.0), glm::vec3(0.0, 0.0, 0.0), glm::vec2(1.0, 0.0)), // 5
+        Vertex::new(glm::vec3(-0.5,  0.5, -0.5), glm::vec3(1.0, 1.0, 1.0), glm::vec3(0.0, 0.0, 0.0), glm::vec2(1.0, 1.0)), // 6
+        Vertex::new(glm::vec3( 0.5,  0.5, -0.5), glm::vec3(1.0, 1.0, 1.0), glm::vec3(0.0, 0.0, 0.0), glm::vec2(0.0, 1.0)), // 7
 
-	  // Left (-X)
-	  -0.5, -0.5, -0.5,  1.0, 1.0, 1.0, 1.0,  0.0, 0.0, // 8
-	  -0.5, -0.5,  0.5,  1.0, 1.0, 1.0, 1.0,  1.0, 0.0, // 9
-	  -0.5,  0.5,  0.5,  1.0, 1.0, 1.0, 1.0,  1.0, 1.0, // 10
-	  -0.5,  0.5, -0.5,  1.0, 1.0, 1.0, 1.0,  0.0, 1.0, // 11
+        // Left (-X)
+        Vertex::new(glm::vec3(-0.5, -0.5, -0.5), glm::vec3(1.0, 1.0, 1.0), glm::vec3(0.0, 0.0, 0.0), glm::vec2(0.0, 0.0)), // 8
+        Vertex::new(glm::vec3(-0.5, -0.5,  0.5), glm::vec3(1.0, 1.0, 1.0), glm::vec3(0.0, 0.0, 0.0), glm::vec2(1.0, 0.0)), // 9
+        Vertex::new(glm::vec3(-0.5,  0.5,  0.5), glm::vec3(1.0, 1.0, 1.0), glm::vec3(0.0, 0.0, 0.0), glm::vec2(1.0, 1.0)), // 10
+        Vertex::new(glm::vec3(-0.5,  0.5, -0.5), glm::vec3(1.0, 1.0, 1.0), glm::vec3(0.0, 0.0, 0.0), glm::vec2(0.0, 1.0)), // 11
 
-	  // Right (+X)
-	   0.5, -0.5,  0.5,  1.0, 1.0, 1.0, 1.0,  0.0, 0.0, // 12
-	   0.5, -0.5, -0.5,  1.0, 1.0, 1.0, 1.0,  1.0, 0.0, // 13
-	   0.5,  0.5, -0.5,  1.0, 1.0, 1.0, 1.0,  1.0, 1.0, // 14
-	   0.5,  0.5,  0.5,  1.0, 1.0, 1.0, 1.0,  0.0, 1.0, // 15
+        // Right (+X)
+        Vertex::new(glm::vec3( 0.5, -0.5,  0.5), glm::vec3(1.0, 1.0, 1.0), glm::vec3(0.0, 0.0, 0.0), glm::vec2(0.0, 0.0)), // 12
+        Vertex::new(glm::vec3( 0.5, -0.5, -0.5), glm::vec3(1.0, 1.0, 1.0), glm::vec3(0.0, 0.0, 0.0), glm::vec2(1.0, 0.0)), // 13
+        Vertex::new(glm::vec3( 0.5,  0.5, -0.5), glm::vec3(1.0, 1.0, 1.0), glm::vec3(0.0, 0.0, 0.0), glm::vec2(1.0, 1.0)), // 14
+        Vertex::new(glm::vec3( 0.5,  0.5,  0.5), glm::vec3(1.0, 1.0, 1.0), glm::vec3(0.0, 0.0, 0.0), glm::vec2(0.0, 1.0)), // 15
 
-	   // Top (+Y)
-	   -0.5,  0.5,  0.5,  1.0, 1.0, 1.0, 1.0,  0.0, 0.0, // 16
-	   -0.5,  0.5, -0.5,  1.0, 1.0, 1.0, 1.0,  1.0, 0.0, // 17
-		0.5,  0.5, -0.5,  1.0, 1.0, 1.0, 1.0,  1.0, 1.0, // 18
-		0.5,  0.5,  0.5,  1.0, 1.0, 1.0, 1.0,  0.0, 1.0, // 19
-       -0.5, -0.5, -0.5,  1.0, 1.0, 1.0, 1.0,  0.0, 0.0, // 20
-       -0.5, -0.5,  0.5,  1.0, 1.0, 1.0, 1.0,  1.0, 0.0, // 21
-        0.5, -0.5,  0.5,  1.0, 1.0, 1.0, 1.0,  1.0, 1.0, // 22
-        0.5, -0.5, -0.5,  1.0, 1.0, 1.0, 1.0,  0.0, 1.0, // 23
+        // Top (+Y)
+        Vertex::new(glm::vec3(-0.5,  0.5,  0.5), glm::vec3(1.0, 1.0, 1.0), glm::vec3(0.0, 0.0, 0.0), glm::vec2(0.0, 0.0)), // 16
+        Vertex::new(glm::vec3(-0.5,  0.5, -0.5), glm::vec3(1.0, 1.0, 1.0), glm::vec3(0.0, 0.0, 0.0), glm::vec2(1.0, 0.0)), // 17
+        Vertex::new(glm::vec3( 0.5,  0.5, -0.5), glm::vec3(1.0, 1.0, 1.0), glm::vec3(0.0, 0.0, 0.0), glm::vec2(1.0, 1.0)), // 18
+        Vertex::new(glm::vec3( 0.5,  0.5,  0.5), glm::vec3(1.0, 1.0, 1.0), glm::vec3(0.0, 0.0, 0.0), glm::vec2(0.0, 1.0)), // 19
+
+        // Bottom (-Y)
+        Vertex::new(glm::vec3(-0.5, -0.5, -0.5), glm::vec3(1.0, 1.0, 1.0), glm::vec3(0.0, 0.0, 0.0), glm::vec2(0.0, 0.0)), // 20
+        Vertex::new(glm::vec3(-0.5, -0.5,  0.5), glm::vec3(1.0, 1.0, 1.0), glm::vec3(0.0, 0.0, 0.0), glm::vec2(1.0, 0.0)), // 21
+        Vertex::new(glm::vec3( 0.5, -0.5,  0.5), glm::vec3(1.0, 1.0, 1.0), glm::vec3(0.0, 0.0, 0.0), glm::vec2(1.0, 1.0)), // 22
+        Vertex::new(glm::vec3( 0.5, -0.5, -0.5), glm::vec3(1.0, 1.0, 1.0), glm::vec3(0.0, 0.0, 0.0), glm::vec2(0.0, 1.0)), // 23
     ];
+
     let indices = [
         // Front
         0, 1, 2, 2, 3, 0,
@@ -80,9 +85,10 @@ fn main(){
     vbo.load_data(&vertices);
     ebo.bind();
     ebo.load_data(&indices);
-    vao.vertex_atrrib_pointer(0, 3, 9 * size_of::<f32>() as i32, 0);
-    vao.vertex_atrrib_pointer(1, 4, 9 * size_of::<f32>() as i32, 3);
-    vao.vertex_atrrib_pointer(2, 2, 9 * size_of::<f32>() as i32, 7);
+    vao.vertex_atrrib_pointer(0, 3, std::mem::size_of::<Vertex>() as i32, std::mem::offset_of!(Vertex, position));
+    vao.vertex_atrrib_pointer(1, 4, std::mem::size_of::<Vertex>() as i32, std::mem::offset_of!(Vertex, color));
+    vao.vertex_atrrib_pointer(2, 3, std::mem::size_of::<Vertex>() as i32, std::mem::offset_of!(Vertex, normal));
+    vao.vertex_atrrib_pointer(3, 2, std::mem::size_of::<Vertex>() as i32, std::mem::offset_of!(Vertex, tex_coord));
     let mut camera = Camera::new(800.0, 600.0, glm::vec3(0.0, 0.0, 2.0));
     while !window.should_close(){
         let delta_time = timer.get_delta_time(window.get_instance()) as f32;

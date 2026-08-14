@@ -76,8 +76,6 @@ impl Shader {
             gl::DeleteShader(vertex_shader);
             gl::DeleteShader(fragment_shader);
 
-            println!("[+] Shader program compiled and linked successfully!");
-
             Shader { id: program_id }
         }
     }

@@ -1,5 +1,7 @@
 use std::os::raw::c_void;
 
+use crate::vertex::Vertex;
+
 pub struct VertexBuffer {
     id: u32
 }
@@ -11,9 +13,9 @@ impl VertexBuffer {
         }
         Self { id: id }
     }
-    pub fn load_data(&self, data: &[f32]){
+    pub fn load_data(&self, data: &[Vertex]){
         unsafe {
-            let size = (data.len() * size_of::<f32>()) as isize;
+            let size = (data.len() * size_of::<Vertex>()) as isize;
             gl::BufferData(gl::ARRAY_BUFFER, size, data.as_ptr() as *const c_void, gl::STATIC_DRAW);
         }
     }
