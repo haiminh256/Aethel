@@ -8,6 +8,7 @@ use aethel::vertex::elementbuffer::ElementBuffer;
 use aethel::vertex::vertexbuffer::VertexBuffer;
 use aethel::renderer::camera::Camera;
 use aethel::vertex::Vertex;
+use aethel::renderer::transform::Transform;
 use nalgebra_glm as glm;
 
 fn main(){
@@ -90,12 +91,17 @@ fn main(){
     vao.vertex_atrrib_pointer(2, 3, std::mem::size_of::<Vertex>() as i32, std::mem::offset_of!(Vertex, normal));
     vao.vertex_atrrib_pointer(3, 2, std::mem::size_of::<Vertex>() as i32, std::mem::offset_of!(Vertex, tex_coord));
     let mut camera = Camera::new(800.0, 600.0, glm::vec3(0.0, 0.0, 2.0));
+
+    let mut cube_transform = Transform::new();
+    cube_transform.position = glm::vec3(0.0, 0.0, 0.0);
     while !window.should_close(){
         let delta_time = timer.get_delta_time(window.get_instance()) as f32;
         window.clear_color(0.2, 0.3, 0.3);
         window.clear();
         vao.bind();
+        cube_transform.rotation.y += 50.0 * delta_time;
         shader.use_program();
+        shader.set_mat4("model", &cube_transform.get_model_matrix());
         camera.matrix(45.0, 0.1, 100.0, &shader, "camMatrix");
         texture.bind(0);
         shader.set_int("tex0", 0);

@@ -1,6 +1,7 @@
 use std::fs;
 use std::ffi::CString;
 use std::ptr;
+use nalgebra_glm as glm;
 
 pub struct Shader {
     pub id: u32, 
@@ -95,6 +96,15 @@ impl Shader {
         let uniform_name = CString::new(name).unwrap();
         unsafe {
             gl::Uniform1i(gl::GetUniformLocation(self.id, uniform_name.as_ptr() as *const i8), value);
+        }
+    }
+    pub fn set_mat4(&self, name: &str, value: &glm::Mat4) {
+        // 1. Chuyển đổi tên biến string sang CString để an toàn cho mã C của OpenGL
+        let uniform_name = CString::new(name).unwrap();
+        
+        unsafe {
+            let location = gl::GetUniformLocation(self.id, uniform_name.as_ptr());
+            gl::UniformMatrix4fv(location, 1, gl::FALSE, value.as_ptr());
         }
     }
 }
