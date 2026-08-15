@@ -9,6 +9,7 @@ use aethel::vertex::vertexbuffer::VertexBuffer;
 use aethel::renderer::camera::Camera;
 use aethel::vertex::Vertex;
 use aethel::renderer::transform::Transform;
+use aethel::renderer::mesh::Mesh;
 use nalgebra_glm as glm;
 
 fn main(){
@@ -80,33 +81,42 @@ fn main(){
     let mut ebo = ElementBuffer::new();
     let mut timer = Time::new();
     let mut texture = Texture::new();
-    texture.load("res/hoshino.png");
+
+    texture.load("res/hoshino.png", true);
     vao.bind();
     vbo.bind();
     vbo.load_data(&vertices);
     ebo.bind();
     ebo.load_data(&indices);
+
     vao.vertex_atrrib_pointer(0, 3, std::mem::size_of::<Vertex>() as i32, std::mem::offset_of!(Vertex, position));
     vao.vertex_atrrib_pointer(1, 4, std::mem::size_of::<Vertex>() as i32, std::mem::offset_of!(Vertex, color));
     vao.vertex_atrrib_pointer(2, 3, std::mem::size_of::<Vertex>() as i32, std::mem::offset_of!(Vertex, normal));
     vao.vertex_atrrib_pointer(3, 2, std::mem::size_of::<Vertex>() as i32, std::mem::offset_of!(Vertex, tex_coord));
+
+    let cube = Mesh::new(vertices.to_vec(), indices.to_vec());
+
     let mut camera = Camera::new(800.0, 600.0, glm::vec3(0.0, 0.0, 2.0));
 
     let mut cube_transform = Transform::new();
     cube_transform.position = glm::vec3(0.0, 0.0, 0.0);
+
     while !window.should_close(){
         let delta_time = timer.get_delta_time(window.get_instance()) as f32;
         window.clear_color(0.2, 0.3, 0.3);
         window.clear();
         vao.bind();
         cube_transform.rotation.y += 50.0 * delta_time;
+
         shader.use_program();
         shader.set_mat4("model", &cube_transform.get_model_matrix());
+
         camera.matrix(45.0, 0.1, 100.0, &shader, "camMatrix");
         texture.bind(0);
         shader.set_int("tex0", 0);
-        window.draw(36, 0);
+        cube.draw(&shader);
         camera.handle_inputs(window.get_window() ,delta_time);
+        
         window.swap_buffers();
         window.poll_events();
     }

@@ -1,6 +1,7 @@
 pub mod camera;
 pub mod texture;
 pub mod transform;
+pub mod mesh;
 use crate::core::window::Window;
 
 pub struct Renderer;

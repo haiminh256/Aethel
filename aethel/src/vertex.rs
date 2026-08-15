@@ -5,6 +5,7 @@ pub mod arraybuffer;
 use nalgebra_glm as glm;
 #[allow(dead_code)]
 #[repr(C)]
+#[derive(Clone, Copy)]
 pub struct Vertex {
     pub position: glm::Vec3,
     pub color: glm::Vec4,
