@@ -1,3 +1,4 @@
+use aethel::core::opengl_debugger::OpenGLDebugger;
 use aethel::core::window::Window;
 use aethel::math::time::Time;
 use aethel::renderer::Renderer;
@@ -75,6 +76,8 @@ fn main(){
         // Bottom
         20, 21, 22, 22, 23, 20,
     ]; 
+
+    OpenGLDebugger::enable_debug();
     let shader = Shader::new("shader/vertex.glsl","shader/fragment.glsl");
     let mut vbo = VertexBuffer::new();
     let mut vao = ArrayBuffer::new();

@@ -26,7 +26,7 @@
 		{
 			"name": "Run",
 			"working_dir": "${project_path}",
-			"cmd": ["cmd", "/c", "start", "cmd", "/k", "cargo run"],
+			"cmd": "cargo run",
 			"selector": "source.rust",
 			"shell": true		
 		},	
